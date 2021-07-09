@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Header from '../Header/Header.jsx';
 import ItemList from '../ItemList/ItemList.jsx';
-// import ItemForm from '../ItemForm/ItemForm.jsx';
+import ItemForm from '../ItemForm/ItemForm.jsx';
 import './App.css';
 
 function App() {
@@ -33,23 +33,39 @@ function App() {
         }
   
     //POST REQUEST
-    const addItem = () =>{
-        axios({
-            type: "POST",
-            url: '/list',
-            data: {
-                item: newItemName,
-                quantity: newItemQuant,
-                unit: newItemUnit,
-                purchase: newItemPurchase
-            }
-        })
+    const handleSubmit =(event) => {
+        const addItem = () =>{
+            axios({
+              type: "POST",
+                url: '/list',
+                data: {
+                    item: newItemName,
+                    quantity: newItemQuant,
+                    unit: newItemUnit,
+                    purchase: newItemPurchase
+                }
+            }) .then( (response)=>{
+                console.log('POST response', response);
+                getItems();
+
+                //clear inputs
+                setNewItem('');
+                setItemQuant('');
+                setNewItemUnit('');
+            }) .catch( (error)=> {
+                console.log ('POST error', error);
+            });
+        }
     }
+
+    
     return (
         <div className="App">
             <Header />
             <main>
+                <ItemForm addNewItem={handleSubmit} />
                 <ItemList list={itemList} />
+                
             </main>
         </div>
     );
