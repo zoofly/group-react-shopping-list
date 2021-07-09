@@ -7,10 +7,10 @@ import './App.css';
 
 function App() {
     let [itemList, setItemList] = useState([]);
-    let [newItemName, setNewItem] = useState('');
-    let [newItemQuant, setItemQuant]= useState('');
-    let [newItemUnit, setNewItemUnit] = useState('');
-    let [newItemPurchase, setNewItemPurchase] = useState('');
+    // let [newItemName, setNewItem] = useState('');
+    // let [newItemQuant, setItemQuant]= useState('');
+    // let [newItemUnit, setNewItemUnit] = useState('');
+    // let [newItemPurchase, setNewItemPurchase] = useState('False');
 
     useEffect(() => {
         console.log("in useEffect");
@@ -33,31 +33,30 @@ function App() {
         }
   
     //POST REQUEST
-    const handleSubmit =(event) => {
-        const addItem = () =>{
-            axios({
-              type: "POST",
-                url: '/list',
-                data: {
-                    item: newItemName,
-                    quantity: newItemQuant,
-                    unit: newItemUnit,
-                    purchase: newItemPurchase
-                }
-            }) .then( (response)=>{
-                console.log('POST response', response);
-                getItems();
+    const handleSubmit = (newItem) => {
 
-                //clear inputs
-                setNewItem('');
-                setItemQuant('');
-                setNewItemUnit('');
+
+
+        console.log(newItem);
+            // axios({
+            //   type: "POST",
+            //     url: '/list',
+            //     data: {
+            //         item: newItem.item,
+            //         quantity: newItem.quantity,
+            //         unit: newItem.unit,
+            //         //purchase: newItem.purchase
+            //     },
+
+            // }) 
+            axios.post('/list', { item: newItem.item, quantity: newItem.quantity, unit: newItem.unit, purchase: newItem.purchase})
+            .then( (response)=>{
+                console.log('POST response', response);
+                getItems();            
             }) .catch( (error)=> {
                 console.log ('POST error', error);
             });
         }
-    }
-
     
     return (
         <div className="App">

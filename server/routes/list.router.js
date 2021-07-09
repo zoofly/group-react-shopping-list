@@ -25,11 +25,19 @@ router.post('/', (req, res) =>{
     VALUES ($1, $2, $3, $4);`;
     pool.query (queryText, [newItem.item, newItem.quantity, newItem.unit, newItem.purchase])
     .then((response)=>{
+        console.log('Router POST response', response);
         res.sendStatus(201);
     }) .catch ((error)=>{
         console.log('Error in posting to server', error);
         res.sendStatus(500);
     });
 });
+
+// router.put('/:id', (req, res) => {
+
+//     `UPDATE "items"
+//     SET purchase = !purchase
+//     WHERE id = $1;`;
+// });
 
 module.exports = router;
