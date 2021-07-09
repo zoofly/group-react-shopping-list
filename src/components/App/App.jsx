@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import React from 'react';
-import Header from '../Header/Header.jsx'
+import Header from '../Header/Header.jsx';
+import ItemList from '../ItemList/ItemList.jsx';
+// import ItemForm from '../ItemForm/ItemForm.jsx';
 import './App.css';
 
 function App() {
     let [itemList, setItemList] = useState([]);
     let [newItemName, setNewItem] = useState('');
     let [newItemQuant, setItemQuant]= useState('');
-    let [newItemUnitemList, setNewItemUnit] = useState('');
+    let [newItemUnit, setNewItemUnit] = useState('');
     let [newItemPurchase, setNewItemPurchase] = useState('');
 
     useEffect(() => {
@@ -22,9 +23,9 @@ function App() {
             method: 'GET',
             url: '/list',
           }).then( (response) => {
-            console.log(response)
+            console.log('Get working');
             console.log(response.data)
-            // setItemList(response.data);
+            setItemList(response.data);
           }).catch( (error) => {
             alert('Error getting items!')
             console.log(error)
@@ -48,7 +49,7 @@ function App() {
         <div className="App">
             <Header />
             <main>
-                <p>Under Construction...</p>
+                <ItemList list={itemList} />
             </main>
         </div>
     );
